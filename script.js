@@ -1,14 +1,42 @@
 let buttons = document.querySelectorAll(".btn")
 let output = document.querySelector(".calcOutput")
 let outputTwo = document.querySelector(".calcOutputTwo")
-let firstVal = '';
-let calcArr = [];
+let clearBtn = document.querySelector(".clearBtn")
+let equalsBtn = document.querySelector("#btnEqual")
+let total = 0;
+let operArr = [];
+let firstNum = [];
 
-let logFunc = (e) => {
-  console.log(e.target.textContent);  
+
+let mathFunc = (e) => {
+  let val = e.target.textContent;
+
+  if ()
+
+  if (val === "+" || val === "/" || val === "*" || val === "-") {
+    operArr[0] = e.target.textContent;
+    total = operate(operArr[0], total, parseInt(firstNum.join("")));
+    firstNum = [];
+  } else if (val === "=") {
+    total = operate(operArr[0], total, parseInt(firstNum.join("")));
+  } else if (typeof parseInt(val) === 'number') {
+    firstNum.push(val);
+  }
+
+  console.log(total, operArr, firstNum);
 }
 
-buttons.forEach(btn => btn.addEventListener('click', logFunc))
+let clearAll = () => {
+  output.textContent = "";
+  outputTwo.textContent = "";
+  total = 0;
+  operArr = [];
+  firstNum = [];
+}
+
+buttons.forEach(btn => btn.addEventListener('click', mathFunc))
+equalsBtn.addEventListener('click', clearAll)
+clearBtn.addEventListener('click', clearAll)
 
 
 
