@@ -26,7 +26,6 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* border: 2px solid black; */
   background-color: azure;
   font-size: 30px;
 }
@@ -38,7 +37,6 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* border: 2px solid black; */
   background-color: azure;
   font-size: 20px;
 }
@@ -48,18 +46,32 @@ body {
   justify-content: center;
   padding: 5px;
   background-color: azure;
-  width: 489px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
   border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.calcBody .clearBtn:hover, .calcBody .btnBoxMain .btn:hover {
+  background-color: black;
+  color: white;
 }
 
 .calcBody .btnBoxMain {
   display: flex;
+  flex-direction: column;
 }
 
-.calcBody .btnBoxMain .btn, .btn {
+.calcBody .btnBoxMain .subBtnBox {
+  display: flex;
+}
+
+.calcBody .btnBoxMain .btn {
   width: 125px;
   height: 125px;
   font-size: 30px;
+  border: none;
 }
 
 .calcBody .btnBoxMain .btnBoxOne, .btnBoxTwo {

@@ -5,26 +5,7 @@ let firstVal = '';
 let calcArr = [];
 
 let logFunc = (e) => {
-
-  if (e.target.textContent === "+" || e.target.textContent === "-" || e.target.textContent === "*" || e.target.textContent === "/") {
-      calcArr.push(firstVal)
-      calcArr.push(e.target.textContent)
-      firstVal = '';
-      outputTwo.textContent = calcArr.join(" ")
-    } else if (calcArr.length >= 3) {
-        firstVal = operate(calcArr[1], parseInt(calcArr[0]), parseInt(calcArr[2]));
-        output.textContent = firstVal;
-        calcArr = [];
-    } else if (e.target.textContent === "=") {
-        calcArr.push(firstVal)
-        outputTwo.textContent = calcArr.join(" ")
-        firstVal = '';
-        output.textContent = operate(calcArr[1], parseInt(calcArr[0]), parseInt(calcArr[2]));
-        calcArr = [];
-    } else {
-        firstVal += e.target.textContent;
-        output.textContent = firstVal
-    }  
+  console.log(e.target.textContent);  
 }
 
 buttons.forEach(btn => btn.addEventListener('click', logFunc))
