@@ -5,35 +5,59 @@ let clearBtn = document.querySelector(".clearBtn")
 let equalsBtn = document.querySelector("#btnEqual")
 let total = [];
 let oper = '';
-let firstNum = '';
+let numArr = [];
 let tempNum = '';
+// let total = [];
+// let oper = '';
+// let firstNum = '';
+// let tempNum = '';
 
 
 let mathFunc = (e) => {
   let val = e.target.textContent;
 
-  if (firstNum != '' && tempNum != '' && oper != '' && val != '=') {
-    total.push(operate(oper, parseInt(tempNum), parseInt(firstNum)));
-    tempNum = operate(oper, parseInt(tempNum), parseInt(firstNum));
-    firstNum = tempNum;
+  if (val === ".") {
+    return "ERR";
   }
 
+  // if (firstNum != '' && tempNum != '' && oper != '' && val != '=') {
+  //   total.push(operate(oper, parseInt(tempNum), parseInt(firstNum)));
+  //   tempNum = operate(oper, parseInt(tempNum), parseInt(firstNum));
+  //   firstNum = tempNum;
+  // }
+
   if (val === "+" || val === "/" || val === "*" || val === "-") {
-    oper = e.target.textContent;
-    tempNum = firstNum;
-    firstNum = '';
-  } else if (val === "=") {
-    total.push(operate(oper, parseInt(tempNum), parseInt(firstNum)));
-    output.textContent = total[total.length - 1];
-    return;
-  } else if (typeof parseInt(val) === 'number') {
-    firstNum += val;
-  }
+      oper = e.target.textContent;
+      numArr.push(tempNum);
+      tempNum = '';
+    } else if (val === "=") {
+      numArr.push(tempNum);
+      total = operate(oper, numArr);
+    } else if (typeof parseInt(val) === 'number') {
+      tempNum += val;
+    }
+
+
+
+  // if (val === "+" || val === "/" || val === "*" || val === "-") {
+  //   oper = e.target.textContent;
+  //   tempNum = firstNum;
+  //   firstNum = '';
+  // } else if (val === "=") {
+  //   total.push(operate(oper, parseInt(tempNum), parseInt(firstNum)));
+  //   output.textContent = total[total.length - 1];
+  //   return;
+  // } else if (typeof parseInt(val) === 'number') {
+  //   firstNum += val;
+  // }
   
-  outputTwo.textContent = `${tempNum}  ${oper} ${firstNum}` ;
-  output.textContent = total[total.length - 1].toFixed(2);
+  // outputTwo.textContent = `${tempNum}  ${oper} ${firstNum}` ;
+  // output.textContent = total[total.length - 1].toFixed(2);
   // output.textContent = total.reduce((val, val2) => val + val2, 0);
-  console.log(total, oper, firstNum, tempNum);
+  console.log(`The oper is: ${oper}`);
+  console.log(`The total is: ${total}`);
+  console.log(`The numArr is: ${numArr}`);
+  console.log(`The tempNum is: ${tempNum}`);
 }
 
 let clearAll = () => {
@@ -48,7 +72,7 @@ let clearAll = () => {
 let clearVals = () => {
   total = [];
   oper = '';
-  firstNum = '';
+  numArr = [];
   tempNum = '';
 }
 
@@ -60,45 +84,33 @@ clearBtn.addEventListener('click', clearAll)
 
 // Math Functions
 
-let addFunc = (a, b) => {
-  let val1 = a;
-  let val2 = b;
-
-  return val1 + val2
+let addFunc = (arr) => {
+  return arr.reduce((prevVal, currVal) => parseInt(prevVal) + parseInt(currVal), 0)
 }
 
-let subtrFunc = (a, b) => {
-  let val1 = a;
-  let val2 = b;
-
-  return val1 - val2;
+let subtrFunc = (arr) => {
+  return arr.reduce((prevVal, currVal) => parseInt(currVal) - parseInt(prevVal), 0)
 }
 
-let multiFunc = (a, b) => {
-  let val1 = a;
-  let val2 = b;
-
-  return val1 * val2;
+let multiFunc = (arr) => {
+  return arr.reduce((prevVal, currVal) => parseInt(prevVal) * parseInt(currVal), 1)
 }
 
-let diviFunc = (a, b) => {
-  let val1 = a;
-  let val2 = b;
-
-  return val1 / val2;
+let diviFunc = (arr) => {
+  return arr.reduce((prevVal, currVal) => parseInt(prevVal) / parseInt(currVal), 100)
 }
 
-let operate = (oper, a, b) => {
+let operate = (oper, arr) => {
   let opVal = oper;
 
   if (opVal === "+") {
-    return addFunc(a, b);
+    return addFunc(arr);
   } else if (opVal === "*") {
-    return multiFunc(a, b);
+    return multiFunc(arr);
   } else if (opVal === "-") {
-    return subtrFunc(a, b);
+    return subtrFunc(arr);
   } else if (opVal === "/") {
-    return diviFunc(a, b);
+    return diviFunc(arr);
   }
 }
 
