@@ -3,39 +3,57 @@ let output = document.querySelector(".calcOutput")
 let outputTwo = document.querySelector(".calcOutputTwo")
 let clearBtn = document.querySelector(".clearBtn")
 let equalsBtn = document.querySelector("#btnEqual")
-let total = 0;
-let operArr = [];
-let firstNum = [];
+let total = [];
+let oper = '';
+let firstNum = '';
+let tempNum = '';
 
 
 let mathFunc = (e) => {
   let val = e.target.textContent;
 
-  if ()
-
-  if (val === "+" || val === "/" || val === "*" || val === "-") {
-    operArr[0] = e.target.textContent;
-    total = operate(operArr[0], total, parseInt(firstNum.join("")));
-    firstNum = [];
-  } else if (val === "=") {
-    total = operate(operArr[0], total, parseInt(firstNum.join("")));
-  } else if (typeof parseInt(val) === 'number') {
-    firstNum.push(val);
+  if (firstNum != '' && tempNum != '' && oper != '' && val != '=') {
+    total.push(operate(oper, parseInt(tempNum), parseInt(firstNum)));
+    tempNum = operate(oper, parseInt(tempNum), parseInt(firstNum));
+    firstNum = tempNum;
   }
 
-  console.log(total, operArr, firstNum);
+  if (val === "+" || val === "/" || val === "*" || val === "-") {
+    oper = e.target.textContent;
+    tempNum = firstNum;
+    firstNum = '';
+  } else if (val === "=") {
+    total.push(operate(oper, parseInt(tempNum), parseInt(firstNum)));
+    output.textContent = total[total.length - 1];
+    return;
+  } else if (typeof parseInt(val) === 'number') {
+    firstNum += val;
+  }
+  
+  outputTwo.textContent = `${tempNum}  ${oper} ${firstNum}` ;
+  output.textContent = total[total.length - 1].toFixed(2);
+  // output.textContent = total.reduce((val, val2) => val + val2, 0);
+  console.log(total, oper, firstNum, tempNum);
 }
 
 let clearAll = () => {
   output.textContent = "";
   outputTwo.textContent = "";
-  total = 0;
-  operArr = [];
-  firstNum = [];
+  total = [];
+  oper = '';
+  firstNum = '';
+  tempNum = '';
+}
+
+let clearVals = () => {
+  total = [];
+  oper = '';
+  firstNum = '';
+  tempNum = '';
 }
 
 buttons.forEach(btn => btn.addEventListener('click', mathFunc))
-equalsBtn.addEventListener('click', clearAll)
+equalsBtn.addEventListener('click', clearVals)
 clearBtn.addEventListener('click', clearAll)
 
 
