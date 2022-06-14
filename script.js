@@ -7,10 +7,16 @@ let addBtn = document.querySelector("#btnAdd")
 let subBtn = document.querySelector("#btnSub")
 let multBtn = document.querySelector("#btnMulti")
 let divBtn = document.querySelector("#btnDiv")
+
 let total = 0;
 let oper = [];
 let numArr = [];
 let tempNum = '';
+
+let keyObj = {
+  96: 0, 97: 1, 98: 2, 99: 3, 100: 4, 101: 5, 102: 6, 103: 7, 104: 8, 105: 9, 110: '.', 111: '/', 106: '*', 109: '-', 107: '+', 13: '=',
+  48: 0, 49: 1, 50: 2, 51: 3, 52: 4, 53: 5, 54: 6, 55: 7, 56: 8, 57: 9, 190: '.', 191: '/', 189: '-', 107: '+', 187: '='
+}
 
 let addFunc = (arr) => {
   return arr.reduce((prevVal, currVal) => parseFloat(prevVal) + parseFloat(currVal));
@@ -42,20 +48,21 @@ let operate = (oper, arr) => {
   }
 }
 
+// Handles what to do when there are more than 2 numbers to calculate
 let symbFunc = (e) => {
   let operHolder = e.target.textContent;
+
   oper.push(operHolder);
   numArr.push(tempNum);
-  tempNum = '';  
+
+  tempNum = '';
+
   total = operate(oper[0], numArr);
+
   numArr = [];
   numArr.push(total);
 
   output.textContent = total;
-  console.log(`The opertor is: ${oper}`);
-  console.log(`The total is: ${total}`);
-  console.log(`The number array is: ${numArr}`);
-  console.log(`The temp number is: ${tempNum}`);
 }
 
 let mathFunc = (e) => {
@@ -79,11 +86,52 @@ let mathFunc = (e) => {
   } else {
     outputTwo.textContent = `${tempNum}`
   }
+}
+
+let mathFuncPress = (e) => {
+  let val = keyObj[e.keyCode];
+
+  if (e.keyCode === 111 || e.keyCode === 106 || e.keyCode === 109 || e.keyCode === 107 || e.keyCode === 189 || e.keyCode === 191) {
+    symbFuncPress(val)
+  }
+
+  console.log(e.keyCode);
+
+  if (parseInt(val) >= 0 || parseInt(val) <= 0 || val === '.') {
+    tempNum += val;
+  } else if (val === "=") {
+    numArr.push(tempNum);
+    total = operate(oper[0], numArr);
+    total = total.toFixed(2);
+    output.textContent = total;
+    return clearVals()
+  }
+
+  if (oper.length >= 2) {
+    oper.shift();
+  }
   
-  console.log(`The opertor is: ${oper}`);
-  console.log(`The total is: ${total}`);
-  console.log(`The number array is: ${numArr}`);
-  console.log(`The temp number is: ${tempNum}`);
+  if (numArr[0] != undefined) {
+    outputTwo.textContent = `${numArr[0]} ${oper[0]} ${tempNum}`;
+  } else {
+    outputTwo.textContent = `${tempNum}`
+  }
+}
+
+let symbFuncPress = (e) => {
+  let operHolder = e;
+
+  oper.push(operHolder);
+  numArr.push(tempNum);
+
+  tempNum = '';
+
+  total = operate(oper[0], numArr);
+
+  numArr = [];
+  numArr.push(total);
+
+  output.textContent = total;
 }
 
 let clearAll = () => {
@@ -95,15 +143,16 @@ let clearAll = () => {
   tempNum = '';
 }
 
+// Function to clear after hitting equal
 let clearVals = () => {
   total = [];
-  oper = '';
+  oper = [];
   numArr = [];
   tempNum = '';
 }
 
+document.addEventListener('keydown', mathFuncPress)
 buttons.forEach(btn => btn.addEventListener('click', mathFunc));
-buttons.forEach(btn => btn.addEventListener(''))
 addBtn.addEventListener('click', symbFunc);
 subBtn.addEventListener('click', symbFunc);
 divBtn.addEventListener('click', symbFunc);
