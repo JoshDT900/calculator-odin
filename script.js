@@ -88,6 +88,7 @@ let mathFunc = (e) => {
   }
 }
 
+//Handles keyboard functionality
 let mathFuncPress = (e) => {
   let val = keyObj[e.keyCode];
 
