@@ -68,6 +68,10 @@ let symbFunc = (e) => {
 let mathFunc = (e) => {
   let val = e.target.textContent;
 
+  if (tempNum.length > 7) {
+    tempNum = tempNum.substring(0, 6);
+  }
+
   if (parseInt(val) >= 0 || parseInt(val) <= 0 || val === '.') {
     tempNum += val;
   } else if (val === "=") {
@@ -95,7 +99,9 @@ let mathFuncPress = (e) => {
     symbFuncPress(val)
   }
 
-  console.log(e.keyCode);
+  if (tempNum.length > 7) {
+    tempNum = tempNum.substring(0, 6);
+  }
 
   if (parseInt(val) >= 0 || parseInt(val) <= 0 || val === '.') {
     tempNum += val;
