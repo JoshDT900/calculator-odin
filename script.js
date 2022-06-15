@@ -140,7 +140,7 @@ let clearAll = () => {
   outputTwo.textContent = "";
   total = [];
   numArr = [];
-  oper = '';
+  oper = [];
   tempNum = '';
 }
 
